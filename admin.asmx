@@ -22,11 +22,11 @@ public class Admin : System.Web.Services.WebService{
 
 	public String GetAdminInfo(){
 			//获取顶部菜单信息
-			String topmenu = GetPriXml2Json("topmenu" , "menu");
+			//String topmenu = GetPriXml2Json("topmenu" , "menu");
 			//获取快捷菜单
-			String logomenu = GetPriXml2Json("logomenu" , "menu");
+			//String logomenu = GetPriXml2Json("logomenu" , "menu");
 			//获取计划树菜单
-			String plantree = GetPriXml2Json("plantree" , "tree");
+			//String plantree = GetPriXml2Json("plantree" , "tree");
 
 			var str = "<data";
 			str += " id = \""+HttpContext.Current.Session["Member_Id"].ToString()+"\" ";
@@ -36,10 +36,10 @@ public class Admin : System.Web.Services.WebService{
 			//str += " duty = \""+HttpContext.Current.Session["Member_Duty"].ToString()+"\" ";
 			//str += " topmenu = \""+topmenu+"\" ";
 			str +=">";
-			str +="<privilege>"+HttpContext.Current.Session["Member_PriList"].ToString()+"</privilege>";
-			str +="<topmenu>"+topmenu+"</topmenu>";
-			str +="<logomenu>"+logomenu+"</logomenu>";
-			str +="<plantree>"+plantree+"</plantree>";
+			//str +="<privilege>"+HttpContext.Current.Session["Member_PriList"].ToString()+"</privilege>";
+			//str +="<topmenu>"+topmenu+"</topmenu>";
+			//str +="<logomenu>"+logomenu+"</logomenu>";
+			//str +="<plantree>"+plantree+"</plantree>";
 			str +="</data>";
 
 			return str;
