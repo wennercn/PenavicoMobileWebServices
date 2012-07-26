@@ -19,7 +19,7 @@ public class Port : IHttpHandler {
 	}
 
 	public void ProcessRequest (HttpContext context) {
-			String fn = "E:\\temp\\"+DateTime.Now.ToString("yyyyMMddHHmmss")+".txt";
+			String fn = "D:\\penavico2\\ws\\mobile\\temp\\"+DateTime.Now.ToString("yyyyMMddHHmmss")+".txt";
 			//context.Response.Write(fn);
 			//context.Response.End();
 
@@ -28,8 +28,8 @@ public class Port : IHttpHandler {
 
 
 			try{
-				HttpPostedFile file = context.Request.Files["file"];   
-				string  uploadPath = "E:\\temp\\";
+				HttpPostedFile file = context.Request.Files[0];   
+				string  uploadPath = "D:\\penavico2\\ws\\mobile\\temp\\";
 
 				if (file != null)  {  
 				   if (!Directory.Exists(uploadPath))  {  
