@@ -26,12 +26,22 @@ public class PlanWorkInfo : System.Web.Services.WebService{
 
 		ATLDATALib.IDBDataAtl rs;
 		rs  = Tpp.RPC.ProcessControl.GetPlanActList("plan_id" , id);
+
+		ATLDATALib.IDBDataAtl ms = Tpp.RPC.ProcessControl.GetUploadActList("plan_id" , id);
+		string mc = "";
+		if (ms.IsOK()){
+			ms.UpdateToRowset();
+			//mc = ms.GetRowCount().ToString();
+			mc = ms.GetNamedXML();
+		}
+		mc = "<media>"+mc+"</media>";
+
         if (rs.IsOK()){
 			if (rs.GetRowCount() == 0){
 				bd.Load(HttpContext.Current.Server.MapPath("../../docs/datas/plan/workinfo.xml"));
-				bd = Page.GetResponseXml("succ", "读取成功!", "<data>"+bd.OuterXml+"</data>", "提示", "", "");
+				bd = Page.GetResponseXml("succ", "读取成功!", "<data><workinfo>"+ bd.OuterXml + "</workinfo>"+mc+"</data>");
 			}else{
-				bd = Page.GetResponseXml("succ", "读取成功!", "<data>" + rs.GetNamedXML() + "</data>", "提示", "", "");
+				bd = Page.GetResponseXml("succ", "读取成功!", "<data><workinfo>" + rs.GetNamedXML() + "</workinfo>"+mc+"</data>");
 			}
         }else{
             bd = Page.GetResponseXml("unsucc", "读取失败!" + rs.GetErrorinfo(), "", "提示", "", "");
