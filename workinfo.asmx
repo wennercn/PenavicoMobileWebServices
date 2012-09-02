@@ -20,9 +20,10 @@ public class PlanWorkInfo : System.Web.Services.WebService{
 
 //读取调度生产进度信息
     [WebMethod(EnableSession = true, Description = "读取调度生产进度信息")]
-    public XmlDataDocument GetWorkInfo(String id)
+    public XmlDataDocument GetWorkInfo(String id , String userhash)
     {
-        XmlDataDocument bd = new XmlDataDocument();
+		Mobile.AutoLogin(userhash);
+		XmlDataDocument bd = new XmlDataDocument();
 
 		ATLDATALib.IDBDataAtl rs;
 		rs  = Tpp.RPC.ProcessControl.GetPlanActList("plan_id" , id);
@@ -51,7 +52,8 @@ public class PlanWorkInfo : System.Web.Services.WebService{
 
 //保存调度生产进度信息
     [WebMethod(EnableSession = true, Description = "保存调度生产进度信息")]
-    public XmlDataDocument SaveWorkInfo(String data , String ptype , String plan_id){
+    public XmlDataDocument SaveWorkInfo(String data , String ptype , String plan_id , String userhash){
+		Mobile.AutoLogin();
         XmlDataDocument bd = new XmlDataDocument();
 
 		results items = Common.Xml2AtlData(data);

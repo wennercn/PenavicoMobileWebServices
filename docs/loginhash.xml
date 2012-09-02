@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logins>
+  <login id="1" name="管理员" code="admin" password="adminwang" hash="8847EF8E0DCC4CC4DD1D58BA2BF9785A" />
+  <login id="324" name="宫剑" code="gongjian" password="111" hash="8B7F873A36693FA673828AED1A62869F" />
+  <login id="263" name="李海亮" code="lihailiang" password="111" hash="CD943EA59E123A0EE0FD1AD3770662B9" />
+  <login id="310" name="赵虎" code="zhaohu" password="469227470" hash="885BC9F2DD9D0506155AEA2C27744480" />
+</logins>

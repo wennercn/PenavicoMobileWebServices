@@ -20,7 +20,8 @@ public class Plan : System.Web.Services.WebService{
 
 //读取我的相关船舶
     [WebMethod(EnableSession = true, Description = "读取我的相关船舶")]
-    public XmlDataDocument GetMyPlans(){
+    public XmlDataDocument GetMyPlans(String userhash){
+				Mobile.AutoLogin(userhash);
         XmlDataDocument bd = new XmlDataDocument();
 		ATLDATALib.IDBDataAtl rs = Tpp.RPC.ShipPlanControl.GetTaskShipList();
         if (rs.IsOK()){

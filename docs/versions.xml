@@ -1,0 +1,11 @@
+﻿<?xml version="1.0"  encoding="utf-8"  ?> 
+<versions>
+	<version>
+		<versionCode>2</versionCode>
+		<versionName>0.0.2</versionName>
+		<fileUrl>http://10.128.60.49/penavico/docs/mobile/PenavicoTJ-test.apk</fileUrl>
+		<publishDate>2012-08-30</publishDate>
+		<author>wenner</author>
+		<description>这是一个升级测试!</description>
+	</version>
+</versions>

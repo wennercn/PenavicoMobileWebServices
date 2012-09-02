@@ -17,14 +17,22 @@ using PENAVICO;
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 public class Version : System.Web.Services.WebService{
     public Version(){
-	}    
+		
+	}
 
 
     [WebMethod(EnableSession = true, Description = "")]
     public XmlDataDocument GetVersion(){
-        XmlDataDocument bd = new XmlDataDocument();
-		bd = Page.GetResponseXml("succ", "1.0.0");
-        return bd;
+        XmlDataDocument bd = new XmlDataDocument();		
+		bd.Load(HttpContext.Current.Server.MapPath("docs/versions.xml"));
+
+		XmlElement version = (XmlElement)bd.SelectSingleNode("//version");
+		if (version == null){
+			return Page.GetResponseXml("unsucc" , "没有发现版本信息!");
+		}else{
+			return Page.GetResponseXml("succ", "ok" , "<data>"+version.OuterXml+"</data>");
+		}
+
 	
 	}
 

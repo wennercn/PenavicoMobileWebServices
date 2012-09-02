@@ -19,7 +19,10 @@ public class Task : System.Web.Services.WebService{
 
 //获取任务列表
     [WebMethod(EnableSession = true, Description = "获取任务列表")]
-    public XmlDataDocument GetTasks(){
+    public XmlDataDocument GetTasks(String userhash){
+
+		Mobile.AutoLogin(userhash);
+
         XmlDataDocument xd = new XmlDataDocument();
 
         ATLDATALib.IDBDataAtl rs = Tpp.RPC.ShipPlanControl.GetPlanShipForRoleList();
@@ -33,7 +36,8 @@ public class Task : System.Web.Services.WebService{
 
 //业务员确认完成
     [WebMethod(EnableSession = true, Description = "业务员确认完成")]
-    public XmlDataDocument CompleteTask(String data){
+    public XmlDataDocument CompleteTask(String data , String userhash){
+		Mobile.AutoLogin(userhash);
         XmlDataDocument bd = new XmlDataDocument();
 		String datas = "";
 

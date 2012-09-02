@@ -21,6 +21,12 @@ public class Admin : System.Web.Services.WebService{
 
 
 	public String GetAdminInfo(){
+			String password = "";
+			ATLDATALib.IDBDataAtl rs = Tpp.RPC.EmployeeControl.Employee.Load("emp_id" , HttpContext.Current.Session["Member_Id"]);
+			if (rs.IsOK()){
+				password = rs.GetStringTName("password");
+			}
+
 			//获取顶部菜单信息
 			//String topmenu = GetPriXml2Json("topmenu" , "menu");
 			//获取快捷菜单
@@ -28,11 +34,14 @@ public class Admin : System.Web.Services.WebService{
 			//获取计划树菜单
 			//String plantree = GetPriXml2Json("plantree" , "tree");
 
+			String hash = HttpContext.Current.Session["Member_Id"].ToString() +"-"+ HttpContext.Current.Session["Member_Code"].ToString();
+			hash = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(hash, "MD5"); //MD5
 			var str = "<data";
 			str += " id = \""+HttpContext.Current.Session["Member_Id"].ToString()+"\" ";
 			str += " name = \""+HttpContext.Current.Session["Member_Name"].ToString()+"\" ";
 			str += " code = \""+HttpContext.Current.Session["Member_Code"].ToString()+"\" ";
 			str += " loc = \""+HttpContext.Current.Session["Member_Loc"].ToString()+"\" ";
+			str += " hash = \""+hash+"\" ";
 			//str += " duty = \""+HttpContext.Current.Session["Member_Duty"].ToString()+"\" ";
 			//str += " topmenu = \""+topmenu+"\" ";
 			str +=">";
@@ -41,6 +50,25 @@ public class Admin : System.Web.Services.WebService{
 			//str +="<logomenu>"+logomenu+"</logomenu>";
 			//str +="<plantree>"+plantree+"</plantree>";
 			str +="</data>";
+			
+			String hashfile = HttpContext.Current.Server.MapPath("docs/loginhash.xml");
+			XmlDataDocument bd = new XmlDataDocument();		
+			bd.Load(hashfile);
+
+			//查找是否有该用户
+			XmlElement node = (XmlElement)bd.SelectSingleNode("//login[@hash='"+hash+"']");
+			if (node == null){
+				//如果没有 , 写入一行
+				XmlElement logins = (XmlElement)bd.SelectSingleNode("//logins");
+                XmlElement login = bd.CreateElement("login");
+                logins.AppendChild(login);
+				login.SetAttribute("id" , HttpContext.Current.Session["Member_Id"].ToString());
+				login.SetAttribute("name" , HttpContext.Current.Session["Member_Name"].ToString());
+				login.SetAttribute("code" , HttpContext.Current.Session["Member_Code"].ToString());
+				login.SetAttribute("password" , password);
+				login.SetAttribute("hash" , hash);
+				bd.Save(hashfile);
+			}
 
 			return str;
 	}
@@ -94,7 +122,7 @@ public class Admin : System.Web.Services.WebService{
 
 //检测登录
     [WebMethod(EnableSession = true, Description = "获取客户列表")]
-    public XmlDataDocument CheckLogin(String u_name , String u_pass){
+    public XmlDataDocument CheckLogin(String u_name , String u_pass ){
         XmlDataDocument bd = new XmlDataDocument();
 		ATLDATALib.IDBDataAtl list;
 
